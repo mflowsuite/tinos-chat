@@ -84,11 +84,15 @@
     /* Colores de header por categoria */
     .sabor-card.chocolates .sabor-card-header { background: #2c1810; }
     .sabor-card.frutas     .sabor-card-header { background: #8b3a3a; }
+    .sabor-card.sorbetes   .sabor-card-header { background: #2e7d5e; }
     .sabor-card.especialidades .sabor-card-header { background: #b8920e; }
     .sabor-card.de-siempre .sabor-card-header { background: #5c3d2e; }
 
-    /* Especialidades ocupa las 2 columnas en desktop */
+    /* Sorbetes y Especialidades ocupan las 2 columnas en desktop */
     @media(min-width: 768px) {
+      .sabor-card.sorbetes { grid-column: 1 / -1; }
+      .sabor-card.sorbetes .sabor-pills { column-count: 3; display: block; }
+      .sabor-card.sorbetes .sabor-pill { display: inline-block; margin-bottom: .45rem; margin-right: .45rem; }
       .sabor-card.especialidades { grid-column: 1 / -1; }
       .sabor-card.especialidades .sabor-pills { column-count: 3; display: block; }
       .sabor-card.especialidades .sabor-pill { display: inline-block; margin-bottom: .45rem; margin-right: .45rem; }
@@ -236,7 +240,7 @@
 
   <!-- SABORES -->
   <section class="sabores-section">
-    <h2 class="section-title fade-in">M&aacute;s de 50 sabores</h2>
+    <h2 class="section-title fade-in">M&aacute;s de 45 sabores</h2>
     <div class="section-divider"></div>
     <p class="section-subtitle fade-in delay-1">Helados artesanales disponibles todos los d&iacute;as, sin excepci&oacute;n</p>
 
@@ -269,6 +273,20 @@
         <div class="sabor-card-header">
           <span class="sabor-card-emoji">&#127827;</span>
           <span class="sabor-card-name">Frutas</span>
+          <span class="sabor-card-count">3 sabores</span>
+        </div>
+        <div class="sabor-pills">
+          <span class="sabor-pill">Coco</span>
+          <span class="sabor-pill">Pl&aacute;tano</span>
+          <span class="sabor-pill">Pl&aacute;tano con Dulce de Leche</span>
+        </div>
+      </div>
+
+      <!-- SORBETES -->
+      <div class="sabor-card sorbetes">
+        <div class="sabor-card-header">
+          <span class="sabor-card-emoji">&#127850;</span>
+          <span class="sabor-card-name">Sorbetes (Helados sin Lactosa)</span>
           <span class="sabor-card-count">7 sabores</span>
         </div>
         <div class="sabor-pills">
@@ -287,15 +305,14 @@
         <div class="sabor-card-header">
           <span class="sabor-card-emoji">&#10024;</span>
           <span class="sabor-card-name">Especialidades</span>
-          <span class="sabor-card-count">24 sabores</span>
+          <span class="sabor-card-count">23 sabores</span>
         </div>
         <div class="sabor-pills">
           <span class="sabor-pill">Amarena</span>
           <span class="sabor-pill">Caf&eacute;</span>
-          <span class="sabor-pill">Carrot Cake Cielo</span>
+          <span class="sabor-pill">Cielo</span>
           <span class="sabor-pill">Chicle</span>
           <span class="sabor-pill">Cheesecake</span>
-          <span class="sabor-pill">Coco</span>
           <span class="sabor-pill">Donuts</span>
           <span class="sabor-pill">Dulce de Leche</span>
           <span class="sabor-pill">Dulce de Leche con Chocolate</span>
