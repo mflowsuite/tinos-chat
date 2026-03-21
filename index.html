@@ -108,8 +108,23 @@
     .carta-section { background: var(--crema); }
     .carta-grid { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
     @media(max-width:600px){ .carta-grid { grid-template-columns: 1fr; } }
-    .carta-grid img { width: 100%; border-radius: 18px; box-shadow: 0 4px 22px rgba(44,24,16,.14); transition: transform .3s ease; }
+    .carta-grid img { width: 100%; border-radius: 18px; box-shadow: 0 4px 22px rgba(44,24,16,.14); transition: transform .3s ease; cursor: pointer; }
     .carta-grid img:hover { transform: translateY(-5px); }
+
+    /* SABOR NEW — shake en loop para novedades */
+    @keyframes sabor-shake {
+      0%, 80%, 100% { transform: translateX(0); }
+      83% { transform: translateX(-4px) rotate(-.5deg); }
+      86% { transform: translateX(4px) rotate(.5deg); }
+      89% { transform: translateX(-3px); }
+      92% { transform: translateX(3px); }
+    }
+    .sabor-pill-new { animation: sabor-shake 4s ease infinite; background: linear-gradient(135deg, #fff4cc, #ffe080) !important; border-color: var(--amarillo) !important; font-weight: 700; }
+    .sabor-pill-new::after { content: 'NUEVO'; font-size: .58rem; background: #d32f2f; color: white; padding: .12rem .38rem; border-radius: 50px; font-weight: 700; letter-spacing: .04em; margin-left: .3rem; vertical-align: middle; }
+
+    /* FOOTER POWERED */
+    .footer-powered { margin-top: 1.25rem; display: flex; align-items: center; justify-content: center; gap: 6px; opacity: .55; font-size: .78rem; color: rgba(255,255,255,.7); text-decoration: none; }
+    .footer-powered img { width: 22px; height: 22px; border-radius: 50%; }
 
     /* CTA */
     .cta-section { background: var(--beige); text-align: center; }
@@ -236,7 +251,7 @@
         </div>
         <div class="sabor-pills">
           <span class="sabor-pill">Chocolate</span>
-          <span class="sabor-pill">Chocolate Dubai</span>
+          <span class="sabor-pill sabor-pill-new">Chocolate Dubai</span>
           <span class="sabor-pill">Oreo</span>
           <span class="sabor-pill">Chocolate Blanco</span>
           <span class="sabor-pill">Kinder</span>
@@ -337,8 +352,8 @@
     <div class="section-divider"></div>
     <p class="section-subtitle fade-in delay-1">Todo lo que necesitas saber antes de venir</p>
     <div class="carta-grid fade-in delay-2">
-      <img src="images/PRECIOS%20HELADOS%202%20def.jpg" alt="Precios Heladeria Tinos" loading="lazy">
-      <img src="images/PRECIOS%20HELADOS%203%20def.jpg" alt="Precios Heladeria Tinos" loading="lazy">
+      <img src="images/PRECIOS%20HELADOS%202%20def.jpg" alt="Precios Heladeria Tinos" loading="lazy" onclick="abrirCarta()" title="Toca para ampliar">
+      <img src="images/PRECIOS%20HELADOS%203%20def.jpg" alt="Precios Heladeria Tinos" loading="lazy" onclick="abrirCarta()" title="Toca para ampliar">
     </div>
   </section>
 
@@ -385,6 +400,10 @@
       <a href="./chat/">&#127846; Chat</a>
     </div>
     <p class="footer-copy">&copy; 2025 Helader&iacute;a Tino's &middot; Todos los d&iacute;as 12:00&ndash;22:00 h</p>
+    <div class="footer-powered">
+      <img src="images/mflowsuite-1x1-otra-ec3d467fe5c5f2d79b17725707529550-1024-1024%5B1%5D.jpg" alt="MFlowSuite">
+      Powered by <strong>MFlowSuite</strong>
+    </div>
   </footer>
 
   <!-- MODAL CARTA -->
