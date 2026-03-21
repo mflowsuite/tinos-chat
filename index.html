@@ -352,8 +352,8 @@
     <div class="section-divider"></div>
     <p class="section-subtitle fade-in delay-1">Todo lo que necesitas saber antes de venir</p>
     <div class="carta-grid fade-in delay-2">
-      <img src="images/PRECIOS%20HELADOS%202%20def.jpg" alt="Precios Heladeria Tinos" loading="lazy" onclick="abrirCarta()" title="Toca para ampliar">
-      <img src="images/PRECIOS%20HELADOS%203%20def.jpg" alt="Precios Heladeria Tinos" loading="lazy" onclick="abrirCarta()" title="Toca para ampliar">
+      <img src="images/PRECIOS%20HELADOS%202%20def.jpg" alt="Precios Heladeria Tinos" loading="lazy" onclick="abrirCarta(this.src)" title="Toca para ampliar">
+      <img src="images/PRECIOS%20HELADOS%203%20def.jpg" alt="Precios Heladeria Tinos" loading="lazy" onclick="abrirCarta(this.src)" title="Toca para ampliar">
     </div>
   </section>
 
@@ -401,8 +401,9 @@
     </div>
     <p class="footer-copy">&copy; 2025 Helader&iacute;a Tino's &middot; Todos los d&iacute;as 12:00&ndash;22:00 h</p>
     <div class="footer-powered">
-      <img src="images/mflowsuite-1x1-otra-ec3d467fe5c5f2d79b17725707529550-1024-1024%5B1%5D.jpg" alt="MFlowSuite">
-      Powered by <strong>MFlowSuite</strong>
+      Powered by
+      <img src="https://dcdn-us.mitiendanube.com/stores/006/912/635/products/mflowsuite-1x1-otra-ec3d467fe5c5f2d79b17725707529550-1024-1024.jpg" alt="MFlowSuite">
+      <strong>MFlowSuite</strong>
     </div>
   </footer>
 
@@ -411,8 +412,7 @@
     <div class="modal-box">
       <button class="modal-close" onclick="cerrarCarta()" aria-label="Cerrar">&#10005;</button>
       <p class="modal-title">Carta y precios</p>
-      <img src="images/PRECIOS%20HELADOS%202%20def.jpg" alt="Precios Heladeria Tinos" loading="lazy">
-      <img src="images/PRECIOS%20HELADOS%203%20def.jpg" alt="Precios Heladeria Tinos" loading="lazy">
+      <img id="modal-img-single" src="" alt="Precios Heladeria Tinos">
     </div>
   </div>
 
@@ -424,7 +424,8 @@
     document.querySelectorAll('.fade-in').forEach(function(el) { obs.observe(el); });
 
     // Modal carta
-    function abrirCarta() {
+    function abrirCarta(src) {
+      document.getElementById('modal-img-single').src = src;
       var m = document.getElementById('modal-carta');
       m.classList.add('open');
       m.setAttribute('aria-hidden', 'false');
