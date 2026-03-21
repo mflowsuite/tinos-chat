@@ -97,11 +97,12 @@
     .sabor-card.de-siempre .sabor-pills { justify-content: center; }
 
     /* VIDEO */
-    .video-section { background: var(--marron); padding: 5rem 1.5rem; text-align: center; }
+    .video-section { position: relative; min-height: 70vh; display: flex; align-items: center; justify-content: center; text-align: center; overflow: hidden; padding: 7rem 1.5rem; }
+    .video-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
+    .video-overlay { position: absolute; inset: 0; background: rgba(44,24,16,.62); z-index: 1; }
+    .video-content { position: relative; z-index: 2; }
     .video-section .section-title { color: white; }
-    .video-section .section-subtitle { color: rgba(255,255,255,.7); margin-bottom: 3rem; }
-    .video-wrapper { max-width: 680px; margin: 0 auto; border-radius: 22px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,.55); }
-    .video-wrapper video { width: 100%; display: block; }
+    .video-section .section-subtitle { color: rgba(255,255,255,.8); }
 
     /* CARTA */
     .carta-section { background: var(--crema); }
@@ -165,7 +166,7 @@
       <h1>Helader&iacute;a Tino's</h1>
       <p class="hero-tagline">Helado artesanal &middot; Alcobendas, Madrid</p>
       <div class="hero-btns">
-        <button onclick="abrirCarta()" class="btn btn-primary">Ver la carta &#127846;</button>
+        <a href="#carta" class="btn btn-primary">Ver la carta &#127846;</a>
         <a href="./chat/" class="btn btn-outline">Hablar con Cami</a>
       </div>
     </div>
@@ -319,13 +320,14 @@
 
   <!-- VIDEO -->
   <section class="video-section">
-    <h2 class="section-title fade-in">&iquest;De qu&eacute; sabor lo har&iacute;as t&uacute;?</h2>
-    <div class="section-divider" style="background:var(--amarillo)"></div>
-    <p class="section-subtitle fade-in delay-1">El helado perfecto empieza con una buena elecci&oacute;n</p>
-    <div class="video-wrapper fade-in delay-2">
-      <video controls playsinline webkit-playsinline preload="auto" poster="images/foto-3.jpg">
-        <source src="images/video-sabores.mp4" type="video/mp4">
-      </video>
+    <video class="video-bg" autoplay muted loop playsinline>
+      <source src="images/video-sabores.mp4" type="video/mp4">
+    </video>
+    <div class="video-overlay"></div>
+    <div class="video-content fade-in">
+      <h2 class="section-title">&iquest;De qu&eacute; sabor lo har&iacute;as t&uacute;?</h2>
+      <div class="section-divider" style="background:var(--amarillo)"></div>
+      <p class="section-subtitle">El helado perfecto empieza con una buena elecci&oacute;n</p>
     </div>
   </section>
 
@@ -335,8 +337,8 @@
     <div class="section-divider"></div>
     <p class="section-subtitle fade-in delay-1">Todo lo que necesitas saber antes de venir</p>
     <div class="carta-grid fade-in delay-2">
-      <img src="images/foto-2.jpg" alt="Productos y precios" loading="lazy">
-      <img src="images/foto-6.jpg" alt="Productos y precios" loading="lazy">
+      <img src="images/PRECIOS%20HELADOS%202%20def.jpg" alt="Precios Heladeria Tinos" loading="lazy">
+      <img src="images/PRECIOS%20HELADOS%203%20def.jpg" alt="Precios Heladeria Tinos" loading="lazy">
     </div>
   </section>
 
@@ -390,8 +392,8 @@
     <div class="modal-box">
       <button class="modal-close" onclick="cerrarCarta()" aria-label="Cerrar">&#10005;</button>
       <p class="modal-title">Carta y precios</p>
-      <img src="images/foto-2.jpg" alt="Carta de precios Heladeria Tinos" loading="lazy">
-      <img src="images/foto-6.jpg" alt="Carta de precios Heladeria Tinos" loading="lazy">
+      <img src="images/PRECIOS%20HELADOS%202%20def.jpg" alt="Precios Heladeria Tinos" loading="lazy">
+      <img src="images/PRECIOS%20HELADOS%203%20def.jpg" alt="Precios Heladeria Tinos" loading="lazy">
     </div>
   </div>
 
