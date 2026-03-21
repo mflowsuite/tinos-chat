@@ -67,12 +67,34 @@
     .producto-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(44,24,16,.85) 0%, transparent 55%); display: flex; align-items: flex-end; padding: 1.25rem; }
     .producto-label { color: white; font-weight: 700; font-size: 1rem; }
 
-    /* SABORES */
+    /* SABORES — cards de categorias */
     .sabores-section { background: var(--beige); }
-    .sabores-gallery { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(2,1fr); gap: 1rem; }
-    @media(min-width:768px){ .sabores-gallery { grid-template-columns: repeat(4,1fr); } }
-    .sabores-gallery img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 14px; transition: transform .3s ease, box-shadow .3s ease; cursor: zoom-in; }
-    .sabores-gallery img:hover { transform: scale(1.04); box-shadow: 0 8px 28px rgba(44,24,16,.22); }
+    .sabores-cards { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr; gap: 1.25rem; }
+    @media(min-width: 768px) { .sabores-cards { grid-template-columns: 1fr 1fr; } }
+
+    .sabor-card { border-radius: 20px; overflow: hidden; box-shadow: 0 4px 20px rgba(44,24,16,.12); background: white; }
+    .sabor-card-header { display: flex; align-items: center; gap: .75rem; padding: 1.1rem 1.5rem; }
+    .sabor-card-emoji { font-size: 1.5rem; line-height: 1; }
+    .sabor-card-name { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; flex: 1; color: white; }
+    .sabor-card-count { background: rgba(255,255,255,.22); color: white; font-size: .72rem; font-weight: 700; padding: .22rem .65rem; border-radius: 50px; letter-spacing: .04em; white-space: nowrap; }
+    .sabor-pills { display: flex; flex-wrap: wrap; gap: .45rem; padding: 1.1rem 1.5rem 1.4rem; }
+    .sabor-pill { background: var(--crema); color: var(--marron); font-size: .8rem; font-weight: 600; padding: .32rem .8rem; border-radius: 50px; border: 1px solid rgba(44,24,16,.1); transition: background .18s; }
+    .sabor-pill:hover { background: var(--beige); }
+
+    /* Colores de header por categoria */
+    .sabor-card.chocolates .sabor-card-header { background: #2c1810; }
+    .sabor-card.frutas     .sabor-card-header { background: #8b3a3a; }
+    .sabor-card.especialidades .sabor-card-header { background: #b8920e; }
+    .sabor-card.de-siempre .sabor-card-header { background: #5c3d2e; }
+
+    /* Especialidades ocupa las 2 columnas en desktop */
+    @media(min-width: 768px) {
+      .sabor-card.especialidades { grid-column: 1 / -1; }
+      .sabor-card.especialidades .sabor-pills { column-count: 3; display: block; }
+      .sabor-card.especialidades .sabor-pill { display: inline-block; margin-bottom: .45rem; margin-right: .45rem; }
+    }
+    /* De siempre centra sus pills */
+    .sabor-card.de-siempre .sabor-pills { justify-content: center; }
 
     /* VIDEO */
     .video-section { background: var(--marron); padding: 5rem 1.5rem; text-align: center; }
@@ -109,7 +131,17 @@
     .footer-links { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; margin: 1.25rem 0; }
     .footer-links a { color: rgba(255,255,255,.6); text-decoration: none; font-size: .9rem; transition: color .2s; }
     .footer-links a:hover { color: var(--amarillo); }
-    .footer-copy { font-size: .8rem; opacity: .4; margin-top: 1.5rem; }
+    .footer-copy { font-size: .8rem; color: white; opacity: 1; margin-top: 1.5rem; }
+
+    /* MODAL CARTA */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.88); display: flex; align-items: center; justify-content: center; z-index: 1000; padding: 1.5rem; opacity: 0; pointer-events: none; transition: opacity .3s ease; }
+    .modal-overlay.open { opacity: 1; pointer-events: all; }
+    .modal-box { position: relative; background: var(--crema); border-radius: 22px; max-width: 580px; width: 100%; max-height: 90vh; overflow-y: auto; padding: 4rem 1.5rem 1.75rem; display: flex; flex-direction: column; gap: 1rem; transform: scale(.94); transition: transform .3s ease; box-shadow: 0 28px 80px rgba(0,0,0,.55); }
+    .modal-overlay.open .modal-box { transform: scale(1); }
+    .modal-box img { width: 100%; border-radius: 14px; display: block; }
+    .modal-close { position: absolute; top: 1rem; right: 1rem; width: 40px; height: 40px; border-radius: 50%; background: var(--marron); color: white; border: none; font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background .2s, transform .2s; line-height: 1; }
+    .modal-close:hover { background: var(--marron-medio); transform: scale(1.1); }
+    .modal-title { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--marron); text-align: center; font-weight: 700; }
 
     /* FADE IN */
     .fade-in { opacity: 0; transform: translateY(28px); transition: opacity .7s ease, transform .7s ease; }
@@ -130,10 +162,10 @@
     <div class="hero-overlay"></div>
     <div class="hero-content fade-in">
       <img src="images/logo.jpg" alt="Logo Heladeria Tinos" class="hero-logo">
-      <h1>Helader&#237;a Tino&#39;s</h1>
+      <h1>Helader&iacute;a Tino's</h1>
       <p class="hero-tagline">Helado artesanal &middot; Alcobendas, Madrid</p>
       <div class="hero-btns">
-        <a href="#carta" class="btn btn-primary">Ver la carta &#127846;</a>
+        <button onclick="abrirCarta()" class="btn btn-primary">Ver la carta &#127846;</button>
         <a href="./chat/" class="btn btn-outline">Hablar con Cami</a>
       </div>
     </div>
@@ -145,18 +177,18 @@
     <div class="info-strip-inner">
       <div class="info-item">
         <span class="info-icon">&#128205;</span>
-        <span class="info-label">D&#243;nde estamos</span>
+        <span class="info-label">D&oacute;nde estamos</span>
         <a href="https://maps.app.goo.gl/7pgdUzbVokWw1xKd8" target="_blank" rel="noopener" class="info-value info-link">C. Manuel de Falla, 61<br>Alcobendas, Madrid</a>
       </div>
       <div class="info-item">
         <span class="info-icon">&#128336;</span>
         <span class="info-label">Horario</span>
-        <span class="info-value">Todos los d&#237;as<br>12:00 &#8211; 22:00 h</span>
+        <span class="info-value">Todos los d&iacute;as<br>12:00 &ndash; 22:00 h</span>
       </div>
       <div class="info-item">
         <span class="info-icon">&#128179;</span>
         <span class="info-label">Formas de pago</span>
-        <span class="info-value">Efectivo<br>Tarjeta de cr&#233;dito</span>
+        <span class="info-value">Efectivo<br>Tarjeta de cr&eacute;dito</span>
       </div>
     </div>
   </div>
@@ -165,7 +197,7 @@
   <section>
     <h2 class="section-title fade-in">Nuestras especialidades</h2>
     <div class="section-divider"></div>
-    <p class="section-subtitle fade-in delay-1">Gofres, batidos, sorbetes, frapp&#233;s y mucho m&#225;s</p>
+    <p class="section-subtitle fade-in delay-1">Gofres, batidos, sorbetes, frapp&eacute;s y mucho m&aacute;s</p>
     <div class="productos-grid fade-in delay-2">
       <div class="producto-card">
         <img src="images/batido.jpg" alt="Batido con nata y sirope" loading="lazy">
@@ -177,7 +209,7 @@
       </div>
       <div class="producto-card">
         <img src="images/frappe.jpg" alt="Frappe de cafe con nata" loading="lazy">
-        <div class="producto-overlay"><span class="producto-label">Frapp&#233;s</span></div>
+        <div class="producto-overlay"><span class="producto-label">Frapp&eacute;s</span></div>
       </div>
       <div class="producto-card">
         <img src="images/sorbetes.jpg" alt="Sorbetes frutales" loading="lazy">
@@ -188,24 +220,110 @@
 
   <!-- SABORES -->
   <section class="sabores-section">
-    <h2 class="section-title fade-in">M&#225;s de 50 sabores</h2>
+    <h2 class="section-title fade-in">M&aacute;s de 50 sabores</h2>
     <div class="section-divider"></div>
-    <p class="section-subtitle fade-in delay-1">Helados artesanales disponibles todos los d&#237;as, sin excepci&#243;n</p>
-    <div class="sabores-gallery fade-in delay-2">
-      <img src="images/foto-1.jpg" alt="Carta de sabores" loading="lazy">
-      <img src="images/foto-3.jpg" alt="Carta de sabores" loading="lazy">
-      <img src="images/foto-5.jpg" alt="Carta de sabores" loading="lazy">
-      <img src="images/foto-7.jpg" alt="Carta de sabores" loading="lazy">
+    <p class="section-subtitle fade-in delay-1">Helados artesanales disponibles todos los d&iacute;as, sin excepci&oacute;n</p>
+
+    <div class="sabores-cards fade-in delay-2">
+
+      <!-- CHOCOLATES -->
+      <div class="sabor-card chocolates">
+        <div class="sabor-card-header">
+          <span class="sabor-card-emoji">&#127851;</span>
+          <span class="sabor-card-name">Chocolates</span>
+          <span class="sabor-card-count">11 sabores</span>
+        </div>
+        <div class="sabor-pills">
+          <span class="sabor-pill">Chocolate</span>
+          <span class="sabor-pill">Chocolate Dubai</span>
+          <span class="sabor-pill">Oreo</span>
+          <span class="sabor-pill">Chocolate Blanco</span>
+          <span class="sabor-pill">Kinder</span>
+          <span class="sabor-pill">Ferrero</span>
+          <span class="sabor-pill">Brownie</span>
+          <span class="sabor-pill">Tino's Pasi&oacute;n</span>
+          <span class="sabor-pill">Chocolate Puro</span>
+          <span class="sabor-pill">Nutella</span>
+          <span class="sabor-pill">Chocolate Vegano</span>
+        </div>
+      </div>
+
+      <!-- FRUTAS -->
+      <div class="sabor-card frutas">
+        <div class="sabor-card-header">
+          <span class="sabor-card-emoji">&#127827;</span>
+          <span class="sabor-card-name">Frutas</span>
+          <span class="sabor-card-count">7 sabores</span>
+        </div>
+        <div class="sabor-pills">
+          <span class="sabor-pill">Fresa</span>
+          <span class="sabor-pill">Mora</span>
+          <span class="sabor-pill">Lim&oacute;n</span>
+          <span class="sabor-pill">Mango</span>
+          <span class="sabor-pill">Mandarina</span>
+          <span class="sabor-pill">Mojito</span>
+          <span class="sabor-pill">Sand&iacute;a</span>
+        </div>
+      </div>
+
+      <!-- ESPECIALIDADES -->
+      <div class="sabor-card especialidades">
+        <div class="sabor-card-header">
+          <span class="sabor-card-emoji">&#10024;</span>
+          <span class="sabor-card-name">Especialidades</span>
+          <span class="sabor-card-count">24 sabores</span>
+        </div>
+        <div class="sabor-pills">
+          <span class="sabor-pill">Amarena</span>
+          <span class="sabor-pill">Caf&eacute;</span>
+          <span class="sabor-pill">Carrot Cake Cielo</span>
+          <span class="sabor-pill">Chicle</span>
+          <span class="sabor-pill">Cheesecake</span>
+          <span class="sabor-pill">Coco</span>
+          <span class="sabor-pill">Donuts</span>
+          <span class="sabor-pill">Dulce de Leche</span>
+          <span class="sabor-pill">Dulce de Leche con Chocolate</span>
+          <span class="sabor-pill">Stracciatella</span>
+          <span class="sabor-pill">S&uacute;per Dulce de Leche</span>
+          <span class="sabor-pill">Turr&oacute;n</span>
+          <span class="sabor-pill">Tramontana</span>
+          <span class="sabor-pill">Tiramis&uacute;</span>
+          <span class="sabor-pill">Tutti Frutti</span>
+          <span class="sabor-pill">Vainilla con Cookies</span>
+          <span class="sabor-pill">Yogur Natural</span>
+          <span class="sabor-pill">Yogur con Frutos Rojos</span>
+          <span class="sabor-pill">Yogur con Maracuy&aacute;</span>
+          <span class="sabor-pill">Lotus</span>
+          <span class="sabor-pill">Mascarpone con D.L.</span>
+          <span class="sabor-pill">Menta</span>
+          <span class="sabor-pill">Nata</span>
+          <span class="sabor-pill">Nata con Nuez</span>
+        </div>
+      </div>
+
+      <!-- DE SIEMPRE -->
+      <div class="sabor-card de-siempre">
+        <div class="sabor-card-header">
+          <span class="sabor-card-emoji">&#127870;</span>
+          <span class="sabor-card-name">De siempre</span>
+          <span class="sabor-card-count">2 sabores</span>
+        </div>
+        <div class="sabor-pills">
+          <span class="sabor-pill">Leche Merengada</span>
+          <span class="sabor-pill">Vainilla</span>
+        </div>
+      </div>
+
     </div>
   </section>
 
   <!-- VIDEO -->
   <section class="video-section">
-    <h2 class="section-title fade-in">&#191;De qu&#233; sabor lo har&#237;as t&#250;?</h2>
+    <h2 class="section-title fade-in">&iquest;De qu&eacute; sabor lo har&iacute;as t&uacute;?</h2>
     <div class="section-divider" style="background:var(--amarillo)"></div>
-    <p class="section-subtitle fade-in delay-1">El helado perfecto empieza con una buena elecci&#243;n</p>
+    <p class="section-subtitle fade-in delay-1">El helado perfecto empieza con una buena elecci&oacute;n</p>
     <div class="video-wrapper fade-in delay-2">
-      <video controls playsinline preload="metadata" poster="images/foto-3.jpg">
+      <video controls playsinline webkit-playsinline preload="auto" poster="images/foto-3.jpg">
         <source src="images/video-sabores.mp4" type="video/mp4">
       </video>
     </div>
@@ -224,31 +342,31 @@
 
   <!-- ENCUENTRANOS -->
   <section class="cta-section">
-    <h2 class="section-title fade-in">Enc&#250;entranos</h2>
+    <h2 class="section-title fade-in">Encu&eacute;ntranos</h2>
     <div class="section-divider"></div>
     <div class="cta-grid fade-in delay-1">
       <a href="https://maps.app.goo.gl/7pgdUzbVokWw1xKd8" target="_blank" rel="noopener" class="cta-card">
         <span class="cta-icon">&#128205;</span>
-        <span class="cta-label">C&#243;mo llegar</span>
+        <span class="cta-label">C&oacute;mo llegar</span>
       </a>
       <a href="https://www.instagram.com/tinosmanueldefalla/" target="_blank" rel="noopener" class="cta-card">
-        <span class="cta-icon">&#128248;</span>
+        <span class="cta-icon">&#128247;</span>
         <span class="cta-label">@tinosmanueldefalla</span>
       </a>
       <a href="https://www.just-eat.es/restaurants-heladeria-tinos-manuel-de-falla-28100/menu" target="_blank" rel="noopener" class="cta-card">
-        <span class="cta-icon">&#128757;</span>
+        <span class="cta-icon">&#127869;</span>
         <span class="cta-label">Pedir a domicilio</span>
       </a>
       <a href="./chat/" class="cta-card">
         <span class="cta-icon">&#127846;</span>
-        <span class="cta-label">Chat con Cami</span>
+        <span class="cta-label">&iquest;Ten&eacute;s alguna duda? Habla con Cami</span>
       </a>
     </div>
   </section>
 
   <!-- CAMI BANNER -->
   <section class="cami-banner">
-    <h2>&#191;Tienes alguna pregunta?</h2>
+    <h2>&iquest;Tienes alguna pregunta?</h2>
     <p>Cami, nuestra asistente virtual, te ayuda con sabores, precios, horarios y encargos al instante.</p>
     <a href="./chat/" class="btn btn-dark">Hablar con Cami &#127846;</a>
   </section>
@@ -256,22 +374,53 @@
   <!-- FOOTER -->
   <footer>
     <img src="images/logo.jpg" alt="Logo Heladeria Tinos" class="footer-logo">
-    <h3>Helader&#237;a Tino&#39;s</h3>
+    <h3>Helader&iacute;a Tino's</h3>
     <p>C. Manuel de Falla, 61 &middot; 28100 Alcobendas, Madrid</p>
     <div class="footer-links">
       <a href="https://maps.app.goo.gl/7pgdUzbVokWw1xKd8" target="_blank" rel="noopener">&#128205; Google Maps</a>
-      <a href="https://www.instagram.com/tinosmanueldefalla/" target="_blank" rel="noopener">&#128248; Instagram</a>
-      <a href="https://www.just-eat.es/restaurants-heladeria-tinos-manuel-de-falla-28100/menu" target="_blank" rel="noopener">&#128757; Just Eat</a>
+      <a href="https://www.instagram.com/tinosmanueldefalla/" target="_blank" rel="noopener">&#128247; Instagram</a>
+      <a href="https://www.just-eat.es/restaurants-heladeria-tinos-manuel-de-falla-28100/menu" target="_blank" rel="noopener">&#127869; Just Eat</a>
       <a href="./chat/">&#127846; Chat</a>
     </div>
-    <p class="footer-copy">&copy; 2025 Helader&#237;a Tino&#39;s &middot; Todos los d&#237;as 12:00&#8211;22:00 h</p>
+    <p class="footer-copy">&copy; 2025 Helader&iacute;a Tino's &middot; Todos los d&iacute;as 12:00&ndash;22:00 h</p>
   </footer>
 
+  <!-- MODAL CARTA -->
+  <div id="modal-carta" class="modal-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Carta y precios">
+    <div class="modal-box">
+      <button class="modal-close" onclick="cerrarCarta()" aria-label="Cerrar">&#10005;</button>
+      <p class="modal-title">Carta y precios</p>
+      <img src="images/foto-2.jpg" alt="Carta de precios Heladeria Tinos" loading="lazy">
+      <img src="images/foto-6.jpg" alt="Carta de precios Heladeria Tinos" loading="lazy">
+    </div>
+  </div>
+
   <script>
-    const obs = new IntersectionObserver(entries => {
-      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    // Fade-in observer
+    var obs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('visible'); });
     }, { threshold: 0.12 });
-    document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+    document.querySelectorAll('.fade-in').forEach(function(el) { obs.observe(el); });
+
+    // Modal carta
+    function abrirCarta() {
+      var m = document.getElementById('modal-carta');
+      m.classList.add('open');
+      m.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+    function cerrarCarta() {
+      var m = document.getElementById('modal-carta');
+      m.classList.remove('open');
+      m.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+    document.getElementById('modal-carta').addEventListener('click', function(e) {
+      if (e.target === this) cerrarCarta();
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') cerrarCarta();
+    });
   </script>
 
 </body>
