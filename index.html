@@ -118,6 +118,9 @@
     .sabor-pills { display: flex; flex-wrap: wrap; gap: .45rem; padding: 1.1rem 1.5rem 1.4rem; }
     .sabor-pill { background: var(--crema); color: var(--marron); font-size: .8rem; font-weight: 600; padding: .32rem .8rem; border-radius: 50px; border: 1px solid rgba(44,24,16,.1); transition: background .18s; }
     .sabor-pill:hover { background: var(--beige); }
+    .sabor-pill[data-foto] { cursor: pointer; }
+    .sabor-pill[data-foto]:hover { background: var(--amarillo) !important; color: var(--marron); transform: scale(1.06); transition: background .18s, transform .18s; }
+    .sabor-pill[data-foto]::after { content: ' 🔍'; font-size: .7em; opacity: .55; }
 
     /* Colores de header por categoria */
     .sabor-card.chocolates .sabor-card-header { background: #2c1810; }
@@ -295,13 +298,13 @@
           <span class="sabor-pill">Chocolate</span>
           <span class="sabor-pill sabor-pill-new">Chocolate Dubai</span>
           <span class="sabor-pill">Oreo</span>
-          <span class="sabor-pill">Chocolate Blanco</span>
-          <span class="sabor-pill">Kinder</span>
+          <span class="sabor-pill" data-foto="sabores/chocolate-blanco.jpg" data-nombre="Chocolate Blanco">Chocolate Blanco</span>
+          <span class="sabor-pill" data-foto="sabores/kinder.jpg" data-nombre="Kinder">Kinder</span>
           <span class="sabor-pill">Ferrero</span>
           <span class="sabor-pill">Brownie</span>
           <span class="sabor-pill">Tino's Pasi&oacute;n</span>
-          <span class="sabor-pill">Chocolate Puro</span>
-          <span class="sabor-pill">Nutella</span>
+          <span class="sabor-pill" data-foto="sabores/chocolate-puro.jpg" data-nombre="Chocolate Puro">Chocolate Puro</span>
+          <span class="sabor-pill" data-foto="sabores/nutella.jpg" data-nombre="Nutella">Nutella</span>
           <span class="sabor-pill">Chocolate Vegano</span>
         </div>
       </div>
@@ -315,7 +318,7 @@
         <div class="sabor-pills">
           <span class="sabor-pill">Coco</span>
           <span class="sabor-pill">Pl&aacute;tano</span>
-          <span class="sabor-pill">Pl&aacute;tano con Dulce de Leche</span>
+          <span class="sabor-pill" data-foto="sabores/platano-dulce-de-leche.jpg" data-nombre="Plátano con Dulce de Leche">Pl&aacute;tano con Dulce de Leche</span>
         </div>
       </div>
 
@@ -331,8 +334,8 @@
           <span class="sabor-pill">Lim&oacute;n</span>
           <span class="sabor-pill">Mango</span>
           <span class="sabor-pill">Mandarina</span>
-          <span class="sabor-pill">Mojito</span>
-          <span class="sabor-pill">Sand&iacute;a</span>
+          <span class="sabor-pill" data-foto="sabores/mojito.jpg" data-nombre="Mojito">Mojito</span>
+          <span class="sabor-pill" data-foto="sabores/sandia.jpg" data-nombre="Sandía">Sand&iacute;a</span>
         </div>
       </div>
 
@@ -347,13 +350,13 @@
           <span class="sabor-pill">Caf&eacute;</span>
           <span class="sabor-pill">Cielo</span>
           <span class="sabor-pill">Chicle</span>
-          <span class="sabor-pill">Cheesecake</span>
+          <span class="sabor-pill" data-foto="sabores/cheesecake.jpg" data-nombre="Cheesecake">Cheesecake</span>
           <span class="sabor-pill">Donuts</span>
           <span class="sabor-pill">Dulce de Leche</span>
-          <span class="sabor-pill">Dulce de Leche con Chocolate</span>
+          <span class="sabor-pill" data-foto="sabores/dulce-de-leche-chocolate.jpg" data-nombre="Dulce de Leche con Chocolate">Dulce de Leche con Chocolate</span>
           <span class="sabor-pill">Stracciatella</span>
           <span class="sabor-pill">S&uacute;per Dulce de Leche</span>
-          <span class="sabor-pill">Turr&oacute;n</span>
+          <span class="sabor-pill" data-foto="sabores/turron.jpg" data-nombre="Turrón">Turr&oacute;n</span>
           <span class="sabor-pill">Tramontana</span>
           <span class="sabor-pill">Tiramis&uacute;</span>
           <span class="sabor-pill">Tutti Frutti</span>
@@ -361,9 +364,9 @@
           <span class="sabor-pill">Yogur Natural</span>
           <span class="sabor-pill">Yogur con Frutos Rojos</span>
           <span class="sabor-pill">Yogur con Maracuy&aacute;</span>
-          <span class="sabor-pill">Lotus</span>
+          <span class="sabor-pill" data-foto="sabores/lotus.jpg" data-nombre="Lotus">Lotus</span>
           <span class="sabor-pill">Mascarpone con D.L.</span>
-          <span class="sabor-pill">Menta</span>
+          <span class="sabor-pill" data-foto="sabores/menta.jpg" data-nombre="Menta">Menta</span>
           <span class="sabor-pill">Nata</span>
           <span class="sabor-pill">Nata con Nuez</span>
         </div>
@@ -492,9 +495,41 @@
       if (e.target === this) cerrarCarta();
     });
     document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') cerrarCarta();
+      if (e.key === 'Escape') { cerrarCarta(); cerrarSabor(); }
+    });
+
+    // Modal fotos de sabores
+    document.addEventListener('click', function(e) {
+      var pill = e.target.closest('.sabor-pill[data-foto]');
+      if (pill) abrirSabor(pill.dataset.foto, pill.dataset.nombre);
+    });
+    function abrirSabor(src, nombre) {
+      document.getElementById('modal-sabor-img').src = src;
+      document.getElementById('modal-sabor-img').alt = nombre;
+      document.getElementById('modal-sabor-nombre').textContent = nombre;
+      var m = document.getElementById('modal-sabor');
+      m.classList.add('open');
+      m.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+    function cerrarSabor() {
+      var m = document.getElementById('modal-sabor');
+      m.classList.remove('open');
+      m.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+    document.getElementById('modal-sabor').addEventListener('click', function(e) {
+      if (e.target === this) cerrarSabor();
     });
   </script>
+
+  <div id="modal-sabor" class="modal-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Foto del sabor">
+    <div class="modal-box" style="max-width:420px; padding:3.5rem 1.2rem 1.5rem;">
+      <button class="modal-close" onclick="cerrarSabor()" aria-label="Cerrar">&#10005;</button>
+      <p class="modal-title" id="modal-sabor-nombre"></p>
+      <img id="modal-sabor-img" src="" alt="" style="border-radius:14px;">
+    </div>
+  </div>
 
 </body>
 </html>
