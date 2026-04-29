@@ -670,5 +670,99 @@
     </div>
   </div>
 
+
+  <!-- ===== BANNER COOKIES ===== -->
+  <div id="cookie-banner" style="display:none; position:fixed; bottom:0; left:0; right:0; z-index:99999; background:#fff; border-top:2px solid #e5c215; box-shadow:0 -4px 24px rgba(44,24,16,.18); padding:1.2rem 1.5rem 1rem; font-family:'Nunito',sans-serif;">
+    <div style="max-width:900px; margin:0 auto;">
+      <div style="display:flex; align-items:center; gap:.7rem; margin-bottom:.7rem;">
+        <img src="images/logo.jpg" alt="Tino's" style="width:36px; height:36px; border-radius:50%; object-fit:cover;">
+        <span style="font-weight:700; color:#2c1810; font-size:1rem;">Tino's Helados</span>
+      </div>
+      <p style="margin:0 0 1rem; color:#2c1810; font-size:.93rem; line-height:1.5;">Utilizamos cookies para optimizar nuestro sitio web y nuestro servicio.</p>
+      <div style="display:flex; flex-wrap:wrap; gap:.6rem; margin-bottom:.9rem;">
+        <button onclick="aceptarCookies('all')" style="background:#2c1810; color:#fff; border:none; border-radius:8px; padding:.55rem 1.2rem; font-size:.9rem; font-weight:700; cursor:pointer; font-family:'Nunito',sans-serif;">Aceptar cookies</button>
+        <button onclick="aceptarCookies('minimal')" style="background:#2c1810; color:#fff; border:none; border-radius:8px; padding:.55rem 1.2rem; font-size:.9rem; font-weight:700; cursor:pointer; font-family:'Nunito',sans-serif;">Rechazar</button>
+        <button onclick="verPreferencias()" style="background:#2c1810; color:#fff; border:none; border-radius:8px; padding:.55rem 1.2rem; font-size:.9rem; font-weight:700; cursor:pointer; font-family:'Nunito',sans-serif;">Ver preferencias</button>
+      </div>
+      <div style="display:flex; flex-wrap:wrap; gap:.5rem 1rem; font-size:.8rem;">
+        <a href="/politica-cookies/" style="color:#5c3d2e; text-decoration:underline;">Política de cookies</a>
+        <a href="/politica-privacidad/" style="color:#5c3d2e; text-decoration:underline;">Política de Privacidad</a>
+        <a href="/aviso-legal/" style="color:#5c3d2e; text-decoration:underline;">Aviso Legal</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal preferencias -->
+  <div id="cookie-prefs-modal" style="display:none; position:fixed; inset:0; z-index:100000; background:rgba(44,24,16,.6); align-items:center; justify-content:center;">
+    <div style="background:#fdf8f0; border-radius:16px; padding:2rem 1.5rem; max-width:480px; width:92%; font-family:'Nunito',sans-serif; position:relative;">
+      <button onclick="cerrarPreferencias()" style="position:absolute; top:1rem; right:1rem; background:none; border:none; font-size:1.3rem; cursor:pointer; color:#2c1810;">&#10005;</button>
+      <h3 style="margin:0 0 .5rem; color:#2c1810; font-family:'Playfair Display',serif;">Preferencias de cookies</h3>
+      <p style="color:#5c3d2e; font-size:.88rem; margin-bottom:1.2rem;">Puedes elegir qué cookies aceptas. Las cookies funcionales son necesarias para el funcionamiento del chat.</p>
+      <div style="margin-bottom:1rem;">
+        <label style="display:flex; align-items:center; gap:.7rem; cursor:default; margin-bottom:.7rem;">
+          <input type="checkbox" checked disabled style="width:18px;height:18px;"> <span style="font-weight:700; color:#2c1810; font-size:.93rem;">Cookies funcionales <span style="font-weight:400; color:#888;">(necesarias)</span></span>
+        </label>
+        <label id="pref-analiticas-label" style="display:flex; align-items:center; gap:.7rem; cursor:pointer;">
+          <input type="checkbox" id="pref-analiticas" style="width:18px;height:18px;"> <span style="font-weight:700; color:#2c1810; font-size:.93rem;">Cookies analíticas <span style="font-weight:400; color:#888;">(estadísticas de visitas)</span></span>
+        </label>
+      </div>
+      <button onclick="guardarPreferencias()" style="background:#2c1810; color:#fff; border:none; border-radius:8px; padding:.6rem 1.4rem; font-size:.93rem; font-weight:700; cursor:pointer; font-family:'Nunito',sans-serif; width:100%;">Guardar preferencias</button>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      var consent = localStorage.getItem('tinos_cookie_consent');
+      if (!consent) {
+        document.getElementById('cookie-banner').style.display = 'block';
+      }
+    })();
+
+    function aceptarCookies(nivel) {
+      localStorage.setItem('tinos_cookie_consent', nivel);
+      localStorage.setItem('tinos_cookie_date', new Date().toISOString());
+      document.getElementById('cookie-banner').style.display = 'none';
+      document.getElementById('cookie-prefs-modal').style.display = 'none';
+      if (nivel === 'all') {
+        activarAnalytics();
+      }
+    }
+
+    function verPreferencias() {
+      var modal = document.getElementById('cookie-prefs-modal');
+      modal.style.display = 'flex';
+      var saved = localStorage.getItem('tinos_cookie_consent');
+      if (saved === 'all') document.getElementById('pref-analiticas').checked = true;
+    }
+
+    function cerrarPreferencias() {
+      document.getElementById('cookie-prefs-modal').style.display = 'none';
+    }
+
+    function guardarPreferencias() {
+      var analiticas = document.getElementById('pref-analiticas').checked;
+      aceptarCookies(analiticas ? 'all' : 'minimal');
+    }
+
+    function activarAnalytics() {
+      /* TODO: reemplazar G-XXXXXXXXXX con el ID real de Google Analytics */
+      var GA_ID = 'G-XXXXXXXXXX';
+      if (GA_ID === 'G-XXXXXXXXXX') return;
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+      document.head.appendChild(s);
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', GA_ID, { anonymize_ip: true });
+    }
+
+    /* Si ya dio consentimiento total en visita anterior, activar Analytics */
+    if (localStorage.getItem('tinos_cookie_consent') === 'all') {
+      activarAnalytics();
+    }
+  </script>
+
 </body>
 </html>
